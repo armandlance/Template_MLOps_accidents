@@ -3,11 +3,11 @@ import json
 import joblib
 import pandas as pd
 import numpy as np
-from src.models import train_model  # si tu veux tester directement ta fonction de training, sinon on peut copier le code ici
+from src.models import train_model  
 from src.models import predict_model
 
 def test_train_and_save_model():
-    # Charger les données prétraitées (on prend juste un sample rapide)
+    # Charger les données prétraitées 
     X_train = pd.read_csv('data/preprocessed/X_train.csv').head(50)
     y_train = pd.read_csv('data/preprocessed/y_train.csv').head(50)
     y_train = np.ravel(y_train)
@@ -22,7 +22,7 @@ def test_train_and_save_model():
 
     assert os.path.exists(model_path)
 
-    # Nettoyage (optionnel)
+    # Nettoyage
     os.remove(model_path)
 
 def test_prediction_with_sample_features():
@@ -65,9 +65,9 @@ def test_prediction_with_sample_features():
     prediction = model.predict(input_df)
 
     assert prediction.shape[0] == 1
-    assert prediction[0] in [0, 1]  # puisque ta cible grav est binaire 0/1
+    assert prediction[0] in [0, 1]  
 
 if __name__ == "__main__":
     test_train_and_save_model()
     test_prediction_with_sample_features()
-    print("Tous les tests passent !")
+    print("Tous les tests passent !") 

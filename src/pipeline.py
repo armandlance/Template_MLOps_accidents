@@ -12,7 +12,7 @@ def load_data(data_dir):
 
 def train_model(X_train, y_train):
     model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train.values.ravel())  # ravel si y est dataframe colonne
+    model.fit(X_train, y_train.values.ravel()) 
     return model
 
 def save_model(model, model_dir="src/models"):
@@ -22,7 +22,7 @@ def save_model(model, model_dir="src/models"):
     print("Modèle sauvegardé.")
 
 def run_pipeline():
-    # Construire chemin absolu vers le dossier data/preprocessed
+    # Chemin vers le dossier data/preprocessed
     data_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'preprocessed')
 
     X_train, y_train, X_test, y_test = load_data(data_dir)

@@ -4,7 +4,7 @@ import os
 
 app = FastAPI()
 
-# Build the path to your model relative to this script
+# Chemin vers le modèle pré-entraîné
 model_path = os.path.join(os.path.dirname(__file__), 'models', 'trained_model.joblib')
 
 model = joblib.load(model_path)
