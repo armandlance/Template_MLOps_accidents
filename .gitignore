@@ -78,10 +78,12 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# exclude data from source control by default
-/data/
-!/data/preprocessed/
+# ignore tout le dossier data sauf preprocessed et son contenu
+data/*
+!/data/preprocessed
 !/data/preprocessed/**
+
+
 
 # Mac OS-specific storage files
 .DS_Store
@@ -93,3 +95,6 @@ target/
 # Mypy cache
 .mypy_cache/
 *.joblib
+
+# À ajouter à la fin de votre .gitignore
+!*.dvc
