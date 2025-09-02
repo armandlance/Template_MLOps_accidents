@@ -80,6 +80,8 @@ target/
 
 # exclude data from source control by default
 /data/
+!/data/preprocessed/
+!/data/preprocessed/**
 
 # Mac OS-specific storage files
 .DS_Store
