@@ -14,7 +14,7 @@ import os
 
 def main(input_filepath, output_filepath):
     """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../preprocessed).
+        cleaned data ready to be analyzed (saved in ../processed).
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
@@ -25,7 +25,7 @@ def main(input_filepath, output_filepath):
     input_filepath_caract = os.path.join(input_filepath, "caracteristiques-2021.csv")
     input_filepath_places = os.path.join(input_filepath, "lieux-2021.csv")
     input_filepath_veh = os.path.join(input_filepath, "vehicules-2021.csv")
-    output_filepath = click.prompt('Enter the file path for the output preprocessed data (e.g., output/preprocessed_data.csv)', type=click.Path())
+    output_filepath = click.prompt('Enter the file path for the output processed data (e.g., output/processed_data.csv)', type=click.Path())
     
     # Call the main data processing function with the provided file paths
     process_data(input_filepath_users, input_filepath_caract, input_filepath_places, input_filepath_veh, output_filepath)

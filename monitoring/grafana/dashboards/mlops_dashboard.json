@@ -1,0 +1,101 @@
+{
+  "dashboard": {
+    "title": "MLOps Monitoring Dashboard",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Nombre de Prédictions",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(mlops_predictions_total[5m]))",
+            "legendFormat": "Prédictions/sec"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "Durée des Prédictions",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(mlops_prediction_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          },
+          {
+            "expr": "histogram_quantile(0.50, rate(mlops_prediction_duration_seconds_bucket[5m]))",
+            "legendFormat": "p50"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Accuracy du Modèle",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "mlops_model_accuracy",
+            "legendFormat": "Accuracy"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 8
+        }
+      },
+      {
+        "id": 4,
+        "title": "Drift Détecté",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "sum(mlops_drift_detected)",
+            "legendFormat": "Features avec drift"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 8
+        }
+      },
+      {
+        "id": 5,
+        "title": "Répartition des Prédictions",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum by(prediction_class) (mlops_predictions_total)",
+            "legendFormat": "Classe {{prediction_class}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        }
+      }
+    ],
+    "refresh": "5s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    }
+  }
+}
