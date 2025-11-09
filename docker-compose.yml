@@ -43,14 +43,17 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////app/airflow.db
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_FOLDER=/app/dags
+      - AIRFLOW_HOME=/app
       - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
+      - AIRFLOW__API__AUTH_BACKENDS=airflow.api.auth.backend.basic_auth
     depends_on:
       - mlflow
     command: >
       bash -c "
       airflow db migrate &&
-      airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true &&
-      airflow webserver & airflow scheduler
+      airflow standalone
       "
   # Prometheus - Collecte de métriques
   prometheus:
