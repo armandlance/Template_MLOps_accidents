@@ -231,6 +231,11 @@ docker-compose exec api python src/monitoring/evidently_monitor.py #Faire start 
 ### API : http://localhost:8000/docs
 ### MLflow : http://localhost:5000
 ### Grafana : http://localhost:3000
+Pour les identifiants :
+admin pour les 2
 ### Prometheus : http://localhost:9090
 ### Airflow : http://localhorst:8080 
-
+Pour les identifiants :
+```
+docker logs mlops_airflow | Select-String -Pattern "standalone" -Context 0,5
+```
