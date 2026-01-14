@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import joblib
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -6,7 +7,11 @@ import click
 import logging
 from sklearn.model_selection import train_test_split
 from check_structure import check_existing_file, check_existing_folder
+from sklearn.impute import SimpleImputer
 import os
+
+from src.models.predict_model import X_train
+from src.models.train_model import X_test
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=False), required=0)
@@ -117,7 +122,13 @@ def process_data(input_filepath_users, input_filepath_caract, input_filepath_pla
     #--Filling NaN values
     col_to_fill_na = ["surf", "circ", "col", "motor"]
     X_train[col_to_fill_na] = X_train[col_to_fill_na].fillna(X_train[col_to_fill_na].mode().iloc[0])
-    X_test[col_to_fill_na] = X_test[col_to_fill_na].fillna(X_train[col_to_fill_na].mode().iloc[0])
+    imputer = SimpleImputer(strategy='most_frequent')
+
+    imputer.fit(X_train[col_to_fill_na])
+    X_train[col_to_fill_na] = imputer.transform(X_train[col_to_fill_na])
+    X_test[col_to_fill_na] = imputer.transform(X_test[col_to_fill_na])
+
+    joblib.dump(imputer, './models/imputer.joblib')
 
     # Create folder if necessary 
     if check_existing_folder(output_folderpath) :

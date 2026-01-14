@@ -25,26 +25,26 @@ dag = DAG(
     tags=['mlops', 'training', 'road-accident']
 )
 
-# # Task 1: Import des données brutes
-# import_data = BashOperator(
-#     task_id='import_raw_data',
-#     bash_command='cd /app && python ./src/data/import_raw_data.py',
-#     dag=dag
-# )
+# Task 1: Import des données brutes
+import_data = BashOperator(
+    task_id='import_raw_data',
+    bash_command='cd /app && python ./src/data/import_raw_data.py',
+    dag=dag
+)
 
-# # Task 2: Prétraitement des données
-# preprocess_data = BashOperator(
-#     task_id='preprocess_data',
-#     bash_command='cd /app && python ./src/data/make_dataset.py',
-#     dag=dag
-# )
+# Task 2: Prétraitement des données
+preprocess_data = BashOperator(
+    task_id='preprocess_data',
+    bash_command='cd /app && python ./src/data/make_dataset.py',
+    dag=dag
+)
 
-# # Task 3: Construction des features
-# build_features = BashOperator(
-#     task_id='build_features',
-#     bash_command='cd /app && python ./src/features/build_features.py',
-#     dag=dag
-# )
+# Task 3: Construction des features
+build_features = BashOperator(
+    task_id='build_features',
+    bash_command='cd /app && python ./src/features/build_features.py',
+    dag=dag
+)
 
 # Task Data X_Train: Existence des données
 def data_valid(**context):
