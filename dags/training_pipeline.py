@@ -25,17 +25,22 @@ dag = DAG(
     tags=['mlops', 'training', 'road-accident']
 )
 
-# Task 1: Import des données brutes
+# Task 1: Importer les données brutes
 import_data = BashOperator(
     task_id='import_raw_data',
-    bash_command='cd /app && python ./src/data/import_raw_data.py',
+    bash_command='cd /app && dvc run -n import_data '
+                 '-o data/raw '
+                 'python src/data/import_raw_data.py',
     dag=dag
 )
 
-# Task 2: Prétraitement des données
-preprocess_data = BashOperator(
-    task_id='preprocess_data',
-    bash_command='cd /app && python ./src/data/make_dataset.py',
+# Task 2: Prétraiter et créer les features
+prepare_data = BashOperator(
+    task_id='prepare_features',
+    bash_command='cd /app && dvc run -n prepare_features '
+                 '-d data/raw '
+                 '-o data/processed '
+                 'python src/data/make_dataset.py',
     dag=dag
 )
 
@@ -130,4 +135,4 @@ notify = PythonOperator(
 
 # Définition du workflow
 #import_data >> preprocess_data >> build_features >> train_model >> validate >> notify
-check_data >> train_model >> validate >> notify
+import_data >> prepare_data >> check_data >> train_model >> validate >> notify
