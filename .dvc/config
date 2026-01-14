@@ -1,3 +1,5 @@
 [core]
-    remote = storage
-    autostage = true
+    remote = data_storage
+
+['remote "data_storage"']
+    url = s3://your-bucket/mlops-data
