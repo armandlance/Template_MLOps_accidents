@@ -81,20 +81,6 @@ check_data = PythonOperator(
 )
 
 
-# Task 5: Validation du modèle
-def validate_model(**context):
-    """Valide que le modèle a été créé correctement"""
-    import os
-    model_path = '/app/models/model.joblib'
-    
-    if not os.path.exists(model_path):
-        raise ValueError("Le modèle n'a pas été créé!")
-    
-    file_size = os.path.getsize(model_path)
-    print(f"✅ Modèle validé: {model_path} ({file_size} bytes)")
-    
-    return True
-
 # Task 4: Entraînement du modèle avec MLflow
 train_model = BashOperator(
     task_id='train_model',
